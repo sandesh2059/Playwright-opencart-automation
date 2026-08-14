@@ -59,3 +59,11 @@ test('search with product name in lowercase', async ({ page }) => {
     await page.locator('button[type="submit"].btn-light.btn-lg').click();
     await expect(page.getByRole('link', { name: 'Samsung SyncMaster 941BW' }).last()).toBeVisible();
 })
+
+test('search with product name in uppercase', async ({ page }) => {
+    await page.goto('http://localhost/index.php');
+    await page.getByRole('textbox', { name: 'Search' }).click();
+    await page.getByRole('textbox', { name: 'Search' }).fill('SAMSUNG SYNCMASTER 941BW');
+    await page.locator('button[type="submit"].btn-light.btn-lg').click();
+    await expect(page.getByRole('link', { name: 'Samsung SyncMaster 941BW' }).last()).toBeVisible();
+})
