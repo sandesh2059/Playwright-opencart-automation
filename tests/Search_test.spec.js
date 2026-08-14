@@ -115,3 +115,55 @@ test('search with no matching product name', async ({ page }) => {
     await page.locator('button[type="submit"].btn-light.btn-lg').click();
     await expect(page.getByText('There is no product that matches the search criteria.')).toBeVisible();
 })
+
+test('search with empty search query', async ({ page }) => {
+    await page.goto('http://localhost/index.php');
+    await page.getByRole('textbox', { name: 'Search' }).click();
+    await page.getByRole('textbox', { name: 'Search' }).fill('');
+    await page.locator('button[type="submit"].btn-light.btn-lg').click();
+    await expect(page.getByText('There is no product that matches the search criteria.')).toBeVisible();
+})
+
+test('search using hyphenated product name', async ({ page }) => {
+    await page.goto('http://localhost/index.php');
+    await page.getByRole('textbox', { name: 'Search' }).click();
+    await page.getByRole('textbox', { name: 'Search' }).fill('Samsung-SyncMaster 941BW');
+    await page.locator('button[type="submit"].btn-light.btn-lg').click();
+    await expect(page.getByRole('link', { name: 'Samsung' }).last()).toBeVisible();
+})
+
+test('search using html tags in product name', async ({ page }) => {
+    await page.goto('http://localhost/index.php');
+    await page.getByRole('textbox', { name: 'Search' }).click();
+    await page.getByRole('textbox', { name: 'Search' }).fill('<b>Samsung SyncMaster 941BW</b>');
+    await page.locator('button[type="submit"].btn-light.btn-lg').click();
+    await expect(page.getByRole('link', { name: 'Samsung SyncMaster 941BW' }).last()).toBeVisible();
+})
+
+test('search after pressing enter key', async ({ page }) => {
+    await page.goto('http://localhost/index.php');
+    await page.getByRole('textbox', { name: 'Search' }).click();
+    await page.getByRole('textbox', { name: 'Search' }).fill('Samsung SyncMaster 941BW');
+    await page.getByRole('textbox', { name: 'Search' }).press('Enter');
+    await expect(page.getByRole('link', { name: 'Samsung SyncMaster 941BW' }).last()).toBeVisible();
+})
+
+test('validate results count for search query', async ({ page }) => {
+    await page.goto('http://localhost/index.php');
+    await page.getByRole('textbox', { name: 'Search' }).click();
+    await page.getByRole('textbox', { name: 'Search' }).fill('Samsung');
+    await page.locator('button[type="submit"].btn-light.btn-lg').click();
+    await expect(page.getByText(/Showing 1 to 2 of 2/)).toBeVisible();
+})
+test('open product detail by clicking on product name after searching', async ({ page }) => {
+  await page.goto('http://localhost/index.php');
+  await page.getByRole('textbox', { name: 'Search' }).click();
+  await page.getByRole('textbox', { name: 'Search' }).fill('samsung');
+  await page.locator('button[type="submit"].btn-light.btn-lg').click();
+  const product = page.getByRole('link', {name: 'Samsung Galaxy Tab 10.1',exact: true}).last();
+  await expect(product).toBeVisible();
+  await product.click();
+
+  await expect(page).toHaveURL(/route=product\/product/);
+  await expect(page.getByRole('heading', { name: 'Samsung Galaxy Tab 10.1' })).toBeVisible();
+});
