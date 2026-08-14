@@ -2,15 +2,15 @@ import { test, expect } from '@playwright/test';
 
 test('search with exact product name', async ({ page }) => {
   await page.goto('http://localhost/index.php');
-  await page.getByRole('link', { name: ' My Account ' }).click();
-  await page.getByRole('link', { name: 'Login' }).click();
-  await page.getByRole('textbox', { name: 'E-Mail Address' }).click();
-  await page.getByRole('textbox', { name: 'E-Mail Address' }).fill('Sandeshchy2059@gmail.com');
-  await page.getByRole('textbox', { name: 'Password' }).click();
-  await page.getByRole('textbox', { name: 'Password' }).fill('Sandesh@12');
-  await page.getByRole('button', { name: 'Login' }).click();
-  await expect(page).toHaveURL(/route=account\/account/);
-  await page.getByRole('link', { name: 'Your Store' }).click();
+  // await page.getByRole('link', { name: ' My Account ' }).click();
+  // await page.getByRole('link', { name: 'Login' }).click();
+  // await page.getByRole('textbox', { name: 'E-Mail Address' }).click();
+  // await page.getByRole('textbox', { name: 'E-Mail Address' }).fill('Sandeshchy2059@gmail.com');
+  // await page.getByRole('textbox', { name: 'Password' }).click();
+  // await page.getByRole('textbox', { name: 'Password' }).fill('Sandesh@12');
+  // await page.getByRole('button', { name: 'Login' }).click();
+  // await expect(page).toHaveURL(/route=account\/account/);
+  // await page.getByRole('link', { name: 'Your Store' }).click();
   await page.getByRole('textbox', { name: 'Search' }).click();
   await page.getByRole('textbox', { name: 'Search' }).fill('iphone');
   await page.locator('button[type="submit"].btn-light.btn-lg').click();
@@ -20,15 +20,15 @@ test('search with exact product name', async ({ page }) => {
 
 test('search with partial product name', async ({ page }) => {
   await page.goto('http://localhost/index.php');
-  await page.getByRole('link', { name: ' My Account ' }).click();
-  await page.getByRole('link', { name: 'Login' }).click();
-  await page.getByRole('textbox', { name: 'E-Mail Address' }).click();
-  await page.getByRole('textbox', { name: 'E-Mail Address' }).fill('Sandeshchy2059@gmail.com');
-  await page.getByRole('textbox', { name: 'Password' }).click();
-  await page.getByRole('textbox', { name: 'Password' }).fill('Sandesh@12');
-  await page.getByRole('button', { name: 'Login' }).click();
-  await expect(page).toHaveURL(/route=account\/account/);
-  await page.getByRole('link', { name: 'Your Store' }).click();
+  // await page.getByRole('link', { name: ' My Account ' }).click();
+  // await page.getByRole('link', { name: 'Login' }).click();
+  // await page.getByRole('textbox', { name: 'E-Mail Address' }).click();
+  // await page.getByRole('textbox', { name: 'E-Mail Address' }).fill('Sandeshchy2059@gmail.com');
+  // await page.getByRole('textbox', { name: 'Password' }).click();
+  // await page.getByRole('textbox', { name: 'Password' }).fill('Sandesh@12');
+  // await page.getByRole('button', { name: 'Login' }).click();
+  // await expect(page).toHaveURL(/route=account\/account/);
+  // await page.getByRole('link', { name: 'Your Store' }).click();
   await page.getByRole('textbox', { name: 'Search' }).click();
   await page.getByRole('textbox', { name: 'Search' }).fill('iph');
   await page.locator('button[type="submit"].btn-light.btn-lg').click();
@@ -37,20 +37,25 @@ test('search with partial product name', async ({ page }) => {
 
 test('search with complete product name', async ({ page }) => {
     await page.goto('http://localhost/index.php');
-    await page.getByRole('link', { name: ' My Account ' }).click();
-    await page.getByRole('link', { name: 'Login' }).click();
-    await page.getByRole('textbox', { name: 'E-Mail Address' }).click();
-    await page.getByRole('textbox', { name: 'E-Mail Address' }).fill('Sandeshchy2059@gmail.com');
-    await page.getByRole('textbox', { name: 'Password' }).click();
-    await page.getByRole('textbox', { name: 'Password' }).fill('Sandesh@12');
-    await page.getByRole('button', { name: 'Login' }).click();
-    await expect(page).toHaveURL(/route=account\/account/);
-    await page.getByRole('link', { name: 'Your Store' }).click();
+    // await page.getByRole('link', { name: ' My Account ' }).click();
+    // await page.getByRole('link', { name: 'Login' }).click();
+    // await page.getByRole('textbox', { name: 'E-Mail Address' }).click();
+    // await page.getByRole('textbox', { name: 'E-Mail Address' }).fill('Sandeshchy2059@gmail.com');
+    // await page.getByRole('textbox', { name: 'Password' }).click();
+    // await page.getByRole('textbox', { name: 'Password' }).fill('Sandesh@12');
+    // await page.getByRole('button', { name: 'Login' }).click();
+    // await expect(page).toHaveURL(/route=account\/account/);
+    // await page.getByRole('link', { name: 'Your Store' }).click();
     await page.getByRole('textbox', { name: 'Search' }).click();
     await page.getByRole('textbox', { name: 'Search' }).fill('Samsung SyncMaster 941BW');
-    
-
     await page.locator('button[type="submit"].btn-light.btn-lg').click();
+    await expect(page.getByRole('link', { name: 'Samsung SyncMaster 941BW' }).last()).toBeVisible();
+})
 
+test('search with product name in lowercase', async ({ page }) => {
+    await page.goto('http://localhost/index.php');
+    await page.getByRole('textbox', { name: 'Search' }).click();
+    await page.getByRole('textbox', { name: 'Search' }).fill('samsung syncmaster 941bw');
+    await page.locator('button[type="submit"].btn-light.btn-lg').click();
     await expect(page.getByRole('link', { name: 'Samsung SyncMaster 941BW' }).last()).toBeVisible();
 })
