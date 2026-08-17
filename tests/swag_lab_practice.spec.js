@@ -1,7 +1,12 @@
 /* this is a file created during practice of playwright automation,
     it is not part of the project, so please ignore this file,
     it is just for practice purpose,
-    i visited https://www.saucedemo.com/ website to practice automation testing */
+    i visited https://www.saucedemo.com/ website to practice automation testing
+    if you wantt to run these tests then you need to just install the dependencies of playwright and
+    then run the command "npx playwright test swag_lab_practice.spec.js --headed --reporter=html" in the terminal to run the tests and 
+    generate the report, too see the report you need to run the command "npx playwright show-report" in the terminal after running the tests
+     
+     */
 
 
 
@@ -124,4 +129,17 @@ test('Verify product details', async ({ page }) => {
   await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
   await page.locator('[data-test="shopping-cart-link"]').click();
   await expect(page.locator('[data-test="inventory-item-name"]')).toBeVisible();
+});
+
+test('add to cart from product details page', async ({ page }) => {
+  await page.goto('https://www.saucedemo.com/');
+  await page.locator('[data-test="username"]').click();
+  await page.locator('[data-test="username"]').fill('standard_user');
+  await page.locator('[data-test="password"]').click();
+  await page.locator('[data-test="password"]').fill('secret_sauce');
+  await page.locator('[data-test="login-button"]').click();
+  await page.locator('[data-test="item-4-title-link"]').click();
+  await page.locator('[data-test="add-to-cart"]').click();
+  await page.locator('[data-test="shopping-cart-link"]').click();
+  await expect(page.locator('[data-test="item-4-title-link"]')).toBeVisible();
 });
