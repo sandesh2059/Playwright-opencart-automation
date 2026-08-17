@@ -74,6 +74,14 @@ test('verify only giving username and leaving password field empty', async ({ pa
   await expect(page.locator('[data-test="error"]')).toBeVisible();
 });
 
+test('verify only giving password and leaving username field empty', async ({ page }) => {
+  await page.goto('https://www.saucedemo.com/');
+  await page.locator('[data-test="password"]').click();
+  await page.locator('[data-test="password"]').fill('secret_sauce');
+  await page.locator('[data-test="login-button"]').click();
+  await expect(page.locator('[data-test="error"]')).toBeVisible();
+});
+
 test('Add single item to cart', async ({ page }) => {
   await page.goto('https://www.saucedemo.com/');
   await page.locator('[data-test="username"]').click();
