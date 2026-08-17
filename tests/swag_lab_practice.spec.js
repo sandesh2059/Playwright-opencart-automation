@@ -58,6 +58,14 @@ test('verify if password is case sensitive', async ({ page }) => {
   await expect(page.locator('[data-test="error"]')).toBeVisible();
 });
 
+test('verify the password masking functionality', async ({ page }) => {
+  await page.goto('https://www.saucedemo.com/');
+  await page.locator('[data-test="password"]').click();
+  await page.locator('[data-test="password"]').fill('secret_sauce');
+  const passwordFieldType = await page.locator('[data-test="password"]').getAttribute('type');
+  expect(passwordFieldType).toBe('password');
+});
+
 test('Add single item to cart', async ({ page }) => {
   await page.goto('https://www.saucedemo.com/');
   await page.locator('[data-test="username"]').click();
