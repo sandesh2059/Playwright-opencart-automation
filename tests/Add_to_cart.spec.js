@@ -122,3 +122,6 @@ test('Add a product to the cart with quantity = 1.5', async ({ page }) => {
   await page.locator('#input-quantity').fill('1.5');
   await page.getByRole('button', { name: 'Add to Cart' }).click();
   await expect(page.getByText('Warning: Quantity should only accept positive whole numbers')).toBeVisible(); // Message displayed was : 'Success: You have added' and 1 item was added for 1.5, 2 item was added for 2.5});
+
+});
+
