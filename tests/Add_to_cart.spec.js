@@ -85,7 +85,22 @@ test('Rapidly click the "Add to Cart" button multiple times', async ({ page }) =
   await page.getByRole('link', { name: ' Shopping Cart' }).click();
   await expect(page.getByRole('heading', { name: 'Shopping Cart' })).toBeVisible();
   await expect(page.locator('#output-cart').getByText('Samsung SyncMaster 941BW')).toBeVisible();
+});
 
-
-
+test('Add a product to the cart with quantity = ajdhf@', async ({ page }) => {
+  await page.goto('http://localhost/index.php');
+  await page.getByRole('link', { name: ' My Account ' }).click();
+  await page.getByRole('link', { name: 'Login' }).click();
+  await page.getByRole('textbox', { name: 'E-Mail Address' }).click();
+  await page.getByRole('textbox', { name: 'E-Mail Address' }).fill('sandeshchy2059@gmail.com');
+  await page.getByRole('textbox', { name: 'Password' }).click();
+  await page.getByRole('textbox', { name: 'Password' }).fill('Sandesh@12');
+  await page.getByRole('button', { name: 'Login' }).click();
+  await expect(page).toHaveURL(/route=account\/account/);
+  await page.goto('http://localhost/index.php');
+  await page.locator('#content').getByText('MacBook').click();
+  await page.locator('#input-quantity').click();
+  await page.locator('#input-quantity').fill('ajdhf@');
+  await page.getByRole('button', { name: 'Add to Cart' }).click();
+  await expect(page.getByText('Warning: Quantity should only accept positive whole numbers')).toBeVisible(); // Message displayed was : 'Success: You have added'
 });
