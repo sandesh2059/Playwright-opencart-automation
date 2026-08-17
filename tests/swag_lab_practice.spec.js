@@ -27,6 +27,8 @@ test('Login with invalid credentials', async ({ page }) => {
   await expect(page.locator('[data-test="error"]')).toBeVisible();
 });
 
+
+
 test('Add single item to cart', async ({ page }) => {
   await page.goto('https://www.saucedemo.com/');
   await page.locator('[data-test="username"]').click();
@@ -96,6 +98,19 @@ test('Checkout process', async ({ page }) => {
   await expect(page.locator('[data-test="complete-header"]'))
   await page.locator('[data-test="back-to-products"]').click();
 
+});
+
+test('Logout from the application', async ({ page }) => {
+  await page.goto('https://www.saucedemo.com/');
+  await page.locator('[data-test="username"]').click();
+  await page.locator('[data-test="username"]').fill('standard_user');
+  await page.locator('[data-test="password"]').click();
+  await page.locator('[data-test="password"]').fill('secret_sauce');
+  await page.locator('[data-test="login-button"]').click();
+  await page.getByRole('button', { name: 'Open Menu' }).click();
+  await page.locator('[data-test="logout-sidebar-link"]').click();
+  await page.goBack();
+  await expect(page.locator('[data-test="error"]')).toBeVisible();
 });
 
 
